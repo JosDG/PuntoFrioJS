@@ -102,3 +102,31 @@ document.addEventListener('DOMContentLoaded', function() {
     // Verificar posición al hacer scroll
     window.addEventListener('scroll', checkScroll);
 });
+
+const imagenes = [
+    "../img/Fondos/ima0.jpg",
+    "../img/Fondos/ima1.jpg",
+    "../img/Fondos/ima2.jpg",
+    "../img/Fondos/ima3.jpg",
+    "../img/Fondos/ima4.jpg",
+    "../img/Fondos/ima5.jpg"
+  ];
+
+  let indice = 0;
+  const fondo1 = document.querySelector('.fondo-1');
+  const fondo2 = document.querySelector('.fondo-2');
+  let actual = fondo1;
+  let siguiente = fondo2;
+
+  fondo1.style.backgroundImage = `url('${imagenes[0]}')`;
+
+  setInterval(() => {
+    indice = (indice + 1) % imagenes.length;
+    siguiente.style.backgroundImage = `url('${imagenes[indice]}')`;
+
+    actual.classList.remove('activo');
+    siguiente.classList.add('activo');
+
+    // Intercambiar referencias
+    [actual, siguiente] = [siguiente, actual];
+  }, 5000); // cada 5 segundos
