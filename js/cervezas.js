@@ -4,7 +4,7 @@ const productos = [
         nombre: "Cerveza Aguila Original Retornable 250cm3 x38",
         precio: 80100,
         imagen: "img/Productos/Cerveza/Cerveza250R.png",
-        alt: "Team Grandes",
+        alt: "Team ",
         tipo: "simple"
     },
     {
