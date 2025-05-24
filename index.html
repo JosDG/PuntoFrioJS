@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,90 @@
     <link href="img/logo32.png" rel="icon">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Ejemplo con Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+
 </head>
+
 <body>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Carrito de Pedidos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Producto</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-productos">
+                            <!-- Aquí se insertarán los productos -->
+                            <tr id="fila-total">
+                                <th scope="row"></th>
+                                <td>
+                                    <h3>TOTAL:</h3>
+                                </td>
+                                <td>
+                                    <h3 id="total-valor">$0</h3>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary"
+                        onclick="enviarTablaPorWhatsapp('573108937175')">WhatsApp 3</button>
+                    <button type="button" class="btn btn-primary"
+                        onclick="enviarTablaPorWhatsapp('573108937175')">WhatsApp 2</button>
+                    <button type="button" class="btn btn-primary"
+                        onclick="enviarTablaPorWhatsapp('573145187692')">WhatsApp 1</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Opciones -->
+    <div class="modal fade" id="opcionesModal" tabindex="-1" aria-labelledby="opcionesModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="opcionesModalLabel">Seleccionar Opción</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4 id="producto-opciones-nombre"></h4>
+                    <div class="d-grid gap-3 mt-3">
+                        <button type="button" class="btn btn-lg btn-outline-primary opcion-btn" id="opcion-completo">
+                            Caja Completa
+                            <span class="d-block mt-2 fs-5" id="precio-completo"></span>
+                        </button>
+                        <button type="button" class="btn btn-lg btn-outline-primary opcion-btn" id="opcion-sixpac">
+                            Sixpac
+                            <span class="d-block mt-2 fs-5" id="precio-sixpac"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <header>
         <div class="container">
             <div class="logo-container">
                 <a href="#inicio"><img src="img/logo.png" alt="Logo Punto Frio y Licores JS" class="logo"></a>
-                
+
             </div>
             <nav>
                 <ul class="menu">
@@ -29,9 +107,11 @@
                     <span></span>
                 </div>
             </nav>
-            <div class="order-btn-container">
-                <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-            </div>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+
         </div>
     </header>
 
@@ -39,10 +119,11 @@
         <!-- Capas de fondo con fade -->
         <div class="fondo fondo-1 activo"></div>
         <div class="fondo fondo-2"></div>
-    
+
         <!-- Contenido normal que ya tienes -->
         <div class="container">
             <div class="hero-content">
+                <br><br><br>
                 <h1>Punto Frio y Licores JS</h1>
                 <h2>¡Tu antojo siempre frío y al instante!</h2>
                 <p>Disfruta de nuestra amplia selección de bebidas refrescantes y licores de calidad</p>
@@ -51,330 +132,53 @@
         </div>
     </section>
 
-    <script>
-        const imagenes = [
-    "img/Fondos/ima0.jpg",
-    "img/Fondos/ima1.jpg",
-    "img/Fondos/ima2.jpg",
-    "img/Fondos/ima3.jpg",
-    "img/Fondos/ima4.jpg",
-    "img/Fondos/ima5.jpg"
-  ];
-
-  let indice = 0;
-  const fondo1 = document.querySelector('.fondo-1');
-  const fondo2 = document.querySelector('.fondo-2');
-  let actual = fondo1;
-  let siguiente = fondo2;
-
-  fondo1.style.backgroundImage = `url('${imagenes[0]}')`;
-
-  setInterval(() => {
-    indice = (indice + 1) % imagenes.length;
-    siguiente.style.backgroundImage = `url('${imagenes[indice]}')`;
-
-    actual.classList.remove('activo');
-    siguiente.classList.add('activo');
-
-    // Intercambiar referencias
-    [actual, siguiente] = [siguiente, actual];
-  }, 5000); // cada 5 segundos
-      </script>
-
+    <!-- Productos Cervezas -->
     <section id="productos" class="productos">
         <div class="container">
             <h2 class="section-title">Cervezas</h2>
             <div class="productos-grid">
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Cerveza/Cerveza250R.png" alt="Team Grandes">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Cerveza Aguila Original Retornable 250cm3 x38</h3>
-                        <h2>$80.100</h2>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Cerveza/Cerveza269L.png" alt="Paladar Fino">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Cerveza Aguila Original Lata 269cm3 x24 uds</h3>
-                        <h2>$55.000</h2>
-                        <h4>Sixpac: $13.750</h4>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Cerveza/CervezaL269L.png" alt="Importadas">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Cerveza Aguila Light Lata 269cm3 x24 uds</h3>
-                        <h2>$50.600</h2>
-                        <h4>Sixpac: $12.650</h4>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Cerveza/CervezaL250R.png" alt="REHIDRATATE">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Cerveza Aguila Light Retornable 250cm3 x38 uds</h3>
-                        <h2>$80.000</h2>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Cerveza/Cerveza330L.png" alt="Refrescos">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Cerveza Aguila Original Lata 330cm3 x24 uds</h3>
-                        <h2>$76.800</h2>
-                        <h4>Sixpac: $19.200</h4>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Cerveza/CervezaCosteña330L.png" alt="Cervezas">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Cerveza Costeña Bacana Lata 330cm3 x24 uds</h3>
-                        <h2>$60.000</h2>
-                        <h4>Sixpac: $15.000</h4>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Cerveza/CervezaCosteña175R.png" alt="Cervezas">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Cerveza Costeñita Retornable 175cm3 x38 uds</h3>
-                        <h2>$78.100</h2>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Cerveza/CervezaCoronita210N.png" alt="Cervezas">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Cerveza Coronita No Retornable 210cm3 x24 uds</h3>
-                        <h2>$84.000</h2>
-                        <h4>Sixpac: $21.000</h4>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Cerveza/CervezaCorona269L.png" alt="Cervezas">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Cerveza Corona Lata 269cm3 x24 uds</h3>
-                        <h2>$79.600</h2>
-                        <h4>Sixpac: $19.900</h4>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Cerveza/CervezaB269L.png" alt="Cervezas">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Cerveza Budweiser Lata 269cm3 x24 uds</h3>
-                        <h2>$60.500</h2>
-                        <h4>Sixpac: $15.125</h4>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Cerveza/CervezaClub330R.png" alt="Cervezas">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Cerveza Club Colombia Dorada Retornable 330cm3 x30 uds</h3>
-                        <h2>$99.000</h2>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Cerveza/CervezaClub269L.png" alt="Cervezas">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Cerveza Club Colombia Dorada Lata 269cm3 x24 uds</h3>
-                        <h2>$55.000</h2>
-                        <h4>Sixpac: $13.750</h4>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Cerveza/CervezaPoker250R.png" alt="Cervezas">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Cerveza Poker Retornable 250cm3 x38 uds</h3>
-                        <h2>$80.000</h2>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
+                <!-- Los productos se generarán aquí automáticamente -->
             </div>
         </div>
     </section>
 
+    <!-- Producto Licores -->
     <section id="Licores" class="Productos">
         <div class="container">
             <h2 class="section-title">Licores</h2>
-            <div class="productos-grid">
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Licores/AguardienteAmarilllo750.png" alt="Licores">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Aguardiente Amarillo De Manzanares 750ml </h3>
-                        <h2>$55.000</h2>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Licores/WhiskyOP750.png" alt="Licores">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Whisky Old Parr 750ml </h3>
-                        <h2>$155.000</h2>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Licores/WhiskyBM750.png" alt="Licores">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Whisky Buchanan’s Master 750ml </h3>
-                        <h2>$196.000</h2>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Licores/WhiskyBD750.png" alt="Licores">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Whisky Buchanan's Deluxe 750ml</h3>
-                        <h2>$167.000</h2>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Licores/WhiskyOP1000.png" alt="Licores">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Whisky Old Parr 1000ml</h3>
-                        <h2>$183.000</h2>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Licores/AguardienteAntioqueñoSA750.png" alt="Licores">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Aguardiente Antioqueño Sin Azúcar 750ml</h3>
-                        <h2>$55.000</h2>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/Licores/AguardienteAntioqueñoSAV750.png" alt="Licores">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Aguardiente Antioqueño Sin Azúcar Verde 750ml </h3>
-                        <h2>$50.000</h2>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>
+            <div class="productos-grid2">
+                <!-- Los productos se generarán aquí automáticamente -->
             </div>
         </div>
     </section>
 
-    <section id="No_alcohólicas" class="Productos">
+    <!-- Productos No Alcohólicos -->
+    <section id="No_alcohólicas" class="productos">
         <div class="container">
             <h2 class="section-title">No Alcohólicas</h2>
-            <div class="productos-grid">
-                <div class="producto-card">
-                    <div class="producto-img">
-                        <img src="img/Productos/NoAlcohol/REHIDRATATE.jpg" alt="Licores">
-                    </div>
-                    <div class="producto-info">
-                        <h3>NN </h3>
-                        <h2>$NN</h2>
-                    </div>
-                    <div class="producto-btn">
-                        <a href="https://wa.me/+573108937175" target="_blank" class="order-btn">Ordenar Ahora</a>
-                    </div>
-                </div>                
+            <div class="productos-grid3">
+                <!-- Los productos se generarán aquí automáticamente -->
             </div>
         </div>
     </section>
 
+    <!-- Sobre Nosotros-->
     <section id="nosotros" class="nosotros">
         <div class="container">
             <h2 class="section-title">Sobre Nosotros</h2>
             <div class="nosotros-content">
                 <div class="nosotros-text">
-                    <p>En Punto Frío y Licores JS somos una nueva empresa dedicada a la venta de bebidas alcohólicas, licores y productos refrescantes, con un enfoque moderno, fresco y orientado al futuro.
+                    <p>En Punto Frío y Licores JS somos una nueva empresa dedicada a la venta de bebidas alcohólicas,
+                        licores y productos refrescantes, con un enfoque moderno, fresco y orientado al futuro.
                     </p>
-                    <p>Nacimos con una meta clara, ser la revolución y nueva generación de la calidad precio. Apostamos a la innovación, al servicio de calidad y a una experiencia diferente, marcada por la eficiencia, el cuidado en cada entrega y la frescura que nos representa.
-                        Nos destacamos por ofrecer un servicio frío, rápido y confiable, llevando lo mejor del mundo de las bebidas directamente a tus manos, con el respaldo de marcas reconocidas y una atención pensada para todos nuestros clientes.
-                        Punto Frío y Licores JS no es solo un negocio: es una nueva forma de hacer las cosas, con impacto, con visión y con estilo.</p>
+                    <p>Nacimos con una meta clara, ser la revolución y nueva generación de la calidad precio. Apostamos
+                        a la innovación, al servicio de calidad y a una experiencia diferente, marcada por la
+                        eficiencia, el cuidado en cada entrega y la frescura que nos representa.
+                        Nos destacamos por ofrecer un servicio frío, rápido y confiable, llevando lo mejor del mundo de
+                        las bebidas directamente a tus manos, con el respaldo de marcas reconocidas y una atención
+                        pensada para todos nuestros clientes.
+                        Punto Frío y Licores JS no es solo un negocio: es una nueva forma de hacer las cosas, con
+                        impacto, con visión y con estilo.</p>
                 </div>
                 <div class="nosotros-img">
                     <img src="img/logo_m.jpg" alt="Nuestra Tienda">
@@ -383,11 +187,12 @@
         </div>
     </section>
 
+    <!-- Como Ordenar -->
     <section id="ordenar" class="ordenar">
         <div class="container">
             <h2 class="section-title">¿Cómo Ordenar?</h2>
             <div class="pasos-ordenar">
-                
+
                 <div class="paso">
                     <div class="paso-icon">
                         <i class="fas fa-phone"></i>
@@ -409,6 +214,7 @@
         </div>
     </section>
 
+    <!-- Contactos -->
     <section id="contacto" class="contacto">
         <div class="container">
             <h2 class="section-title">Contacto y Ubicación</h2>
@@ -425,9 +231,12 @@
                         <i class="fas fa-phone"></i>
                         <div>
                             <h3>Teléfono</h3>
-                            <p><a href="https://wa.me/+573108937175" target="_blank"><i class="fab fa-whatsapp"></i>+57 3108937175</a></p>
-                            <p><a href="https://wa.me/+573107160681" target="_blank"><i class="fab fa-whatsapp"></i>+57 3107160681</a></p>
-                            <p><a href="https://wa.me/+573135886120" target="_blank"><i class="fab fa-whatsapp"></i>+57 3135886120</a></p>
+                            <p><a href="https://wa.me/+573108937175" target="_blank"><i class="fab fa-whatsapp"></i>+57
+                                    3108937175</a></p>
+                            <p><a href="https://wa.me/+573107160681" target="_blank"><i class="fab fa-whatsapp"></i>+57
+                                    3107160681</a></p>
+                            <p><a href="https://wa.me/+573135886120" target="_blank"><i class="fab fa-whatsapp"></i>+57
+                                    3135886120</a></p>
                         </div>
                     </div>
                     <div class="contacto-item">
@@ -446,7 +255,10 @@
                     </div>
                 </div>
                 <div class="mapa">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d348.34737268823693!2d-74.0234610530581!3d8.962874524021464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e5e71627cd32f39%3A0x8613caaaa74ca003!2sPunto%20Frio%20y%20Licores%20JS!5e0!3m2!1ses-419!2sco!4v1745897134489!5m2!1ses-419!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d348.34737268823693!2d-74.0234610530581!3d8.962874524021464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e5e71627cd32f39%3A0x8613caaaa74ca003!2sPunto%20Frio%20y%20Licores%20JS!5e0!3m2!1ses-419!2sco!4v1745897134489!5m2!1ses-419!2sco"
+                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
                     <div class="mapa-placeholder">
                         <p>Mapa de ubicación</p>
                     </div>
@@ -480,11 +292,50 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Punto Frio y Licores JS. Todos los derechos reservados.</p>
+                <p>&copy; 2025 J4 Enterprise. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Cambio de imagenes -->
+    <script>
+        const imagenes = [
+            "img/Fondos/ima0.jpg",
+            "img/Fondos/ima1.jpg",
+            "img/Fondos/ima2.jpg",
+            "img/Fondos/ima3.jpg",
+            "img/Fondos/ima4.jpg",
+            "img/Fondos/ima5.jpg"
+        ];
+
+        let indice = 0;
+        const fondo1 = document.querySelector('.fondo-1');
+        const fondo2 = document.querySelector('.fondo-2');
+        let actual = fondo1;
+        let siguiente = fondo2;
+
+        fondo1.style.backgroundImage = `url('${imagenes[0]}')`;
+
+        setInterval(() => {
+            indice = (indice + 1) % imagenes.length;
+            siguiente.style.backgroundImage = `url('${imagenes[indice]}')`;
+
+            actual.classList.remove('activo');
+            siguiente.classList.add('activo');
+
+            // Intercambiar referencias
+            [actual, siguiente] = [siguiente, actual];
+        }, 5000); // cada 5 segundos
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
+    <script src="js/cervezas.js"></script>
+    <script src="js/licores.js"></script>
+    <script src="js/noAlcohólicas.js"></script>
 </body>
+
 </html>
