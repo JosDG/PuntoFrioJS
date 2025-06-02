@@ -14,7 +14,7 @@
         integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 
 </head>
-
+<button id="btn-arriba" class="btn-arriba rotar" onclick="irArriba()">➤</button>
 <body>
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -49,14 +49,16 @@
                         </tbody>
                     </table>
                 </div>
+                <p style="text-align: center;">Haz clic en uno de nuestros contactos para enviar tu lista vía WhatsApp.</p>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary"
-                        onclick="enviarTablaPorWhatsapp('573135886120')">WhatsApp 3</button>
+                        onclick="enviarTablaPorWhatsapp('573135886120')">Contacto 4</button>
                     <button type="button" class="btn btn-primary"
-                        onclick="enviarTablaPorWhatsapp('573107160681')">WhatsApp 2</button>
+                        onclick="enviarTablaPorWhatsapp('573107160681')">Contacto 3</button>
                     <button type="button" class="btn btn-primary"
-                        onclick="enviarTablaPorWhatsapp('573108937175')">WhatsApp 1</button>
+                        onclick="enviarTablaPorWhatsapp('573122680250')">Contacto 2</button>
+                    <button type="button" class="btn btn-primary"
+                        onclick="enviarTablaPorWhatsapp('573108937175')">Contacto 1</button>
                 </div>
             </div>
         </div>
@@ -108,8 +110,11 @@
                 </div>
             </nav>
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <i class="fas fa-shopping-cart"></i>
+            <button type="button" class="btn btn-primary position-relative" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fas fa-shopping-cart"></i> 
+                <span class="contador-carrito position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="contador-carrito">
+                    0
+                </span>
             </button>
 
         </div>
@@ -195,17 +200,25 @@
 
                 <div class="paso">
                     <div class="paso-icon">
+                        <i class="fas fa-shopping-cart"></i> 
+                    </div>
+                    <h3>1. Selecciona tus productos</h3>
+                    <p>Explora nuestro catálogo y elige lo que necesitas</p>
+                </div>
+
+                <div class="paso">
+                    <div class="paso-icon">
                         <i class="fas fa-phone"></i>
                     </div>
-                    <h3>1. Contáctanos</h3>
-                    <p>Llámanos o escríbenos por WhatsApp para hacer tu pedido</p>
+                    <h3>2. Contáctanos</h3>
+                    <p>Envíanos tu lista por WhatsApp o llámanos directamente</p>
                 </div>
                 <div class="paso">
                     <div class="paso-icon">
                         <i class="fas fa-truck"></i>
                     </div>
-                    <h3>2. Recibe tu pedido</h3>
-                    <p>Te entregamos en la puerta de tu casa o negocio</p>
+                    <h3>3. Recibe tu pedido</h3>
+                    <p>Entregamos rápido y seguro en tu casa o negocio</p>
                 </div>
             </div>
             <div class="ordenar-cta">
@@ -233,6 +246,8 @@
                             <h3>Teléfono</h3>
                             <p><a href="https://wa.me/+573108937175" target="_blank"><i class="fab fa-whatsapp"></i>+57
                                     3108937175</a></p>
+                            <p><a href="https://wa.me/+573135886120" target="_blank"><i class="fab fa-whatsapp"></i>+57
+                                    3122680250</a></p>
                             <p><a href="https://wa.me/+573107160681" target="_blank"><i class="fab fa-whatsapp"></i>+57
                                     3107160681</a></p>
                             <p><a href="https://wa.me/+573135886120" target="_blank"><i class="fab fa-whatsapp"></i>+57

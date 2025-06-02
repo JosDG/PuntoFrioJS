@@ -1,3 +1,25 @@
+let cantidadProductos = 0;
+const contadorSpan = document.getElementById('contador-carrito');
+function actualizarContadorCarrito() {
+    if (contadorSpan) {
+        contadorSpan.textContent = cantidadProductos;
+    }
+}
+
+function irArriba() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.addEventListener('scroll', function () {
+  const btn = document.getElementById('btn-arriba');
+  if (window.scrollY > 500) {
+    btn.style.display = 'block'; // Muestra el botón
+  } else {
+    btn.style.display = 'none'; // Lo oculta
+  }
+});
+
+
 document.addEventListener('DOMContentLoaded', function () {
     // Menú móvil
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
@@ -168,6 +190,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Función para agregar un producto al carrito
     function agregarProducto(nombre, precio) {
         console.log("Agregando producto:", nombre, "Precio:", precio);
+        
 
         if (!tablaProductos || !filaTotal) {
             console.error("No se encontró la tabla o la fila total");
@@ -198,6 +221,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 fila.remove();
                 actualizarTotal();
                 console.log("Producto eliminado:", nombre);
+                cantidadProductos--;
+                actualizarContadorCarrito();
             });
         }
     }
@@ -215,13 +240,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
             console.log("Botón clickeado:", nombre, precio);
             agregarProducto(nombre, precio);
+            
 
             // Efecto visual - Asegurarse de aplicar al elemento correcto
             event.target.classList.add('agregado');
             setTimeout(() => {
                 event.target.classList.remove('agregado');
             }, 500);
+            cantidadProductos++;
+            actualizarContadorCarrito();
         }
+        
     });
 
     // Configurar el modal de opciones
@@ -251,6 +280,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (productoActual) {
                     console.log("Opción completa seleccionada");
                     agregarProducto(productoActual.nombre + ' x24 uds', productoActual.precioCompleto);
+                    cantidadProductos++;
+                    actualizarContadorCarrito();
 
                     // Cerrar el modal
                     const modal = bootstrap.Modal.getInstance(opcionesModal);
@@ -265,6 +296,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (productoActual) {
                     console.log("Opción sixpac seleccionada");
                     agregarProducto(productoActual.nombre + ' Sixpac', productoActual.precioSixpac);
+                    cantidadProductos++;
+                    actualizarContadorCarrito();
 
                     // Cerrar el modal
                     const modal = bootstrap.Modal.getInstance(opcionesModal);

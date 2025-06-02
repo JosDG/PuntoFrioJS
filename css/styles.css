@@ -504,6 +504,27 @@ footer {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.btn-arriba {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 24px;
+  padding: 10px 15px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  display: none; /* Oculto por defecto */
+  z-index: 999;
+}
+
+
+.rotar {
+    transform: rotate(-90deg);
+}
+
+
 /* Responsive design */
 @media (max-width: 992px) {
   .container nav {
